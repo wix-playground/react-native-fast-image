@@ -177,6 +177,10 @@
 
 -(UIImage*) getPlaceholderImage
 {
+    return nil;
+}
+
+/*
     // if no placeholder
     if (self.placeholder == nil)
     {
@@ -211,7 +215,7 @@
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
     
     return lastPreviousCachedImage;
-}
+}*/
 
 @end
 

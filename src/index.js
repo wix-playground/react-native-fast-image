@@ -34,6 +34,7 @@ class FastImage extends Component {
         } = this.props
 
         const resolvedSource = Image.resolveAssetSource(source)
+        const placeholderSource = Image.resolveAssetSource(placeholder)
 
         if (fallback) {
             return (
@@ -45,7 +46,7 @@ class FastImage extends Component {
                         {...props}
                         style={StyleSheet.absoluteFill}
                         source={resolvedSource}
-                        placeholder={placeholder}
+                        placeholder={placeholderSource}
                         onLoadStart={onLoadStart}
                         onProgress={onProgress}
                         onLoad={onLoad}
@@ -63,7 +64,7 @@ class FastImage extends Component {
                     {...props}
                     style={StyleSheet.absoluteFill}
                     source={resolvedSource}
-                    placeholder={placeholder}
+                    placeholder={placeholderSource}
                     onFastImageLoadStart={onLoadStart}
                     onFastImageProgress={onProgress}
                     onFastImageLoad={onLoad}
@@ -125,7 +126,7 @@ const FastImageSourcePropType = PropTypes.shape({
 FastImage.propTypes = {
     ...ViewPropTypes,
     source: PropTypes.oneOfType([FastImageSourcePropType, PropTypes.number]),
-    placeholder: PropTypes.string,
+    placeholder: FastImageSourcePropType,
     onLoadStart: PropTypes.func,
     onProgress: PropTypes.func,
     onLoad: PropTypes.func,

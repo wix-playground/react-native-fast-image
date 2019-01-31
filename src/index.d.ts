@@ -82,7 +82,7 @@ export interface OnProgressEvent {
 
 export interface FastImageProperties {
     source: FastImageSource | number
-    placeholder?: string
+    placeholder?: FastImageSource
     resizeMode?: FastImage.ResizeMode
     fallback?: boolean
 
