@@ -134,6 +134,8 @@
         hasCompleted = NO;
         hasErrored = NO;
         
+        UIImage* placeholdeImage = [self getPlaceholderImage];
+        
         // Load the new source.
         // This will work for:
         //   - https://
@@ -141,7 +143,7 @@
         //   - file:///var/containers/Bundle/Application/545685CB-777E-4B07-A956-2D25043BC6EE/ReactNativeFastImageExample.app/assets/src/images/plankton.gif
         //   - file:///Users/dylan/Library/Developer/CoreSimulator/Devices/61DC182B-3E72-4A18-8908-8A947A63A67F/data/Containers/Data/Application/AFC2A0D2-A1E5-48C1-8447-C42DA9E5299D/Documents/images/E1F1D5FC-88DB-492F-AD33-B35A045D626A.jpg"
         [self sd_setImageWithURL:_source.url
-                placeholderImage:nil
+                placeholderImage:placeholdeImage
                          options:options
                         progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                             if (_onFastImageProgress) {
@@ -171,6 +173,42 @@
                             }
                         }];
     }
+}
+
+-(UIImage*) getPlaceholderImage
+{
+    // if no placeholder
+    if (self._placeholder == nil || self._placeholder._url == nil)
+    {
+        return nil;
+    }
+    
+    UIImage* localImage = [self getLocalPlaceholderImageIfFound];
+    if (localImage != nil)
+    {
+        return localImage;
+    }
+    
+    return [self getStoredInCachePlaceholderImageIfFound];
+}
+
+-(UIImage*) getLocalPlaceholderImageIfFound
+{
+    if [self._placeholder._url isFileURL]
+    {
+        NSData* data = [NSData dataWithContentsOfURL:self._placeholder._url];
+        return data == nil ? nil : [[UIImage alloc] initWithData:data];
+    }
+    
+    return nil;
+}
+
+-(UIImage*) getStoredInCachePlaceholderImageIfFound
+{
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:self._placeholder._url];
+    UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
+    
+    return lastPreviousCachedImage;
 }
 
 @end

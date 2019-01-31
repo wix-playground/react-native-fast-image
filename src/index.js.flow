@@ -57,6 +57,7 @@ export type FastImageProps = $ReadOnly<{|
     onProgress?: ?(event: OnProgressEvent) => void,
 
     source: FastImageSource | number,
+    placeholder?: string,
 
     resizeMode?: ?ResizeModes,
     fallback?: ?boolean,
