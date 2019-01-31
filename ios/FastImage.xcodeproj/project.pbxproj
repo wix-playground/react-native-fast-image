@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300C09B322032A290015D7AD /* FFFastImagePlaceholderRetreiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 300C09B222032A290015D7AD /* FFFastImagePlaceholderRetreiver.m */; };
 		FCC6D1391EB3912D0065F944 /* libSDWebImage iOS static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCC6D0D01EB38D2F0065F944 /* libSDWebImage iOS static.a */; };
 		FCFB253F1EA5562700F59778 /* FFFastImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = FCFB25381EA5562700F59778 /* FFFastImageSource.m */; };
 		FCFB25401EA5562700F59778 /* FFFastImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCFB253A1EA5562700F59778 /* FFFastImageView.m */; };
@@ -79,6 +80,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		300C09B122032A290015D7AD /* FFFastImagePlaceholderRetreiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFFastImagePlaceholderRetreiver.h; sourceTree = "<group>"; };
+		300C09B222032A290015D7AD /* FFFastImagePlaceholderRetreiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFFastImagePlaceholderRetreiver.m; sourceTree = "<group>"; };
 		A287971D1DE0C0A60081BDFA /* libFastImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFastImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC6D0C61EB38D2F0065F944 /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = Vendor/SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
 		FCFB25371EA5562700F59778 /* FFFastImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFastImageSource.h; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				FCFB253C1EA5562700F59778 /* FFFastImageViewManager.m */,
 				FCFB253D1EA5562700F59778 /* RCTConvert+FFFastImage.h */,
 				FCFB253E1EA5562700F59778 /* RCTConvert+FFFastImage.m */,
+				300C09B122032A290015D7AD /* FFFastImagePlaceholderRetreiver.h */,
+				300C09B222032A290015D7AD /* FFFastImagePlaceholderRetreiver.m */,
 			);
 			path = FastImage;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300C09B322032A290015D7AD /* FFFastImagePlaceholderRetreiver.m in Sources */,
 				FCFB25411EA5562700F59778 /* FFFastImageViewManager.m in Sources */,
 				FCFB25421EA5562700F59778 /* RCTConvert+FFFastImage.m in Sources */,
 				FCFB25401EA5562700F59778 /* FFFastImageView.m in Sources */,

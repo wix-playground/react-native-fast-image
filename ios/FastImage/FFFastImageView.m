@@ -1,4 +1,5 @@
 #import "FFFastImageView.h"
+#import "FFFastImagePlaceholderRetreiver.h"
 
 @implementation FFFastImageView {
     BOOL hasSentOnLoadStart;
@@ -177,45 +178,19 @@
 
 -(UIImage*) getPlaceholderImage
 {
-    return nil;
-}
-
-/*
-    // if no placeholder
-    if (self.placeholder == nil)
+    if (self.image != nil)
+    {
+        return self.image;
+    }
+    
+    if (self.placeholder == nil || self.placeholder.url == nil)
     {
         return nil;
     }
     
-    UIImage* localImage = [self getLocalPlaceholderImageIfFound];
-    if (localImage != nil)
-    {
-        return localImage;
-    }
-    
-    return [self getStoredInCachePlaceholderImageIfFound];
+    return [FFFastImagePlaceholderRetreiver retreivePlaceholderImageFromURL:self.placeholder.url];
 }
-
--(UIImage*) getLocalPlaceholderImageIfFound
-{
-    NSURL* url = [NSURL URLWithString:self.placeholder];
-    if ([url isFileURL])
-    {
-        NSData* data = [NSData dataWithContentsOfURL:url];
-        return data == nil ? nil : [[UIImage alloc] initWithData:data];
-    }
-    
-    return nil;
-}
-
--(UIImage*) getStoredInCachePlaceholderImageIfFound
-{
-    NSURL* url = [NSURL URLWithString:self.placeholder];
-    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
-    UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
-    
-    return lastPreviousCachedImage;
-}*/
+                    
 
 @end
 
