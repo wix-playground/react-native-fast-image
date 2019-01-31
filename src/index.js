@@ -21,6 +21,7 @@ class FastImage extends Component {
     render() {
         const {
             source,
+            placeholder,
             onLoadStart,
             onProgress,
             onLoad,
@@ -44,6 +45,7 @@ class FastImage extends Component {
                         {...props}
                         style={StyleSheet.absoluteFill}
                         source={resolvedSource}
+                        placeholder={placeholder}
                         onLoadStart={onLoadStart}
                         onProgress={onProgress}
                         onLoad={onLoad}
@@ -61,6 +63,7 @@ class FastImage extends Component {
                     {...props}
                     style={StyleSheet.absoluteFill}
                     source={resolvedSource}
+                    placeholder={placeholder}
                     onFastImageLoadStart={onLoadStart}
                     onFastImageProgress={onProgress}
                     onFastImageLoad={onLoad}
