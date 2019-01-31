@@ -178,7 +178,7 @@
 -(UIImage*) getPlaceholderImage
 {
     // if no placeholder
-    if (self._placeholder == nil || self._placeholder._url == nil)
+    if (self.placeholder == nil)
     {
         return nil;
     }
@@ -194,9 +194,10 @@
 
 -(UIImage*) getLocalPlaceholderImageIfFound
 {
-    if [self._placeholder._url isFileURL]
+    NSURL* url = [NSURL URLWithString:self.placeholder];
+    if [url isFileURL]
     {
-        NSData* data = [NSData dataWithContentsOfURL:self._placeholder._url];
+        NSData* data = [NSData dataWithContentsOfURL:url];
         return data == nil ? nil : [[UIImage alloc] initWithData:data];
     }
     
@@ -205,7 +206,8 @@
 
 -(UIImage*) getStoredInCachePlaceholderImageIfFound
 {
-    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:self._placeholder._url];
+    NSURL* url = [NSURL URLWithString:self.placeholder];
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:key];
     
     return lastPreviousCachedImage;
