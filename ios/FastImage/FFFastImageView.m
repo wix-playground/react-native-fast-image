@@ -195,7 +195,7 @@
 -(UIImage*) getLocalPlaceholderImageIfFound
 {
     NSURL* url = [NSURL URLWithString:self.placeholder];
-    if [url isFileURL]
+    if ([url isFileURL])
     {
         NSData* data = [NSData dataWithContentsOfURL:url];
         return data == nil ? nil : [[UIImage alloc] initWithData:data];
