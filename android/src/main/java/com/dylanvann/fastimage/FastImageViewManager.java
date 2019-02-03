@@ -2,9 +2,11 @@ package com.dylanvann.fastimage;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.facebook.react.bridge.ReadableMap;
@@ -52,6 +54,20 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         return new FastImageViewWithUrl(reactContext);
     }
 
+    @ReactProp(name = "placeholder")
+    public void setPlaceholder(FastImageViewWithUrl view, @Nullable ReadableMap placeholder) {
+        if (placeholder == null || !placeholder.hasKey("uri") || isNullOrEmpty(placeholder.getString("uri"))) {
+            if(view.placeholder != null){
+                FastImageOkHttpProgressGlideModule.forget(view.placeholder.getString("uri"));
+            }
+
+            view.placeholder = null;
+            return;
+        } else {
+            view.placeholder = placeholder;
+        }
+    }
+
     @ReactProp(name = "source")
     public void setSrc(FastImageViewWithUrl view, @Nullable ReadableMap source) {
         if (source == null || !source.hasKey("uri") || isNullOrEmpty(source.getString("uri"))) {
@@ -94,6 +110,9 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         eventEmitter.receiveEvent(viewId, REACT_ON_LOAD_START_EVENT, new WritableNativeMap());
 
         if (requestManager != null) {
+            RequestBuilder<Drawable> placeholderThumbnailRequestBuilder =
+                    getPlaceholderThumbnailRequestBuilder(view.placeholder, context);
+
             requestManager
                     // This will make this work for remote and local images. e.g.
                     //    - file:///
@@ -103,9 +122,24 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
                     //    - data:image/png;base64
                     .load(imageSource.getSourceForLoad())
                     .apply(FastImageViewConverter.getOptions(source))
+                    .thumbnail(placeholderThumbnailRequestBuilder)
                     .listener(new FastImageRequestListener(key))
                     .into(view);
         }
+    }
+
+    private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(ReadableMap placeholder, ThemedReactContext context){
+        RequestBuilder<Drawable> placeholderThumbnailRequestBuilder = null;
+
+        if(placeholder != null) {
+            String url = placeholder.getString("uri");
+            placeholderThumbnailRequestBuilder = GlideApp
+                    .with(context)
+                    .applyDefaultRequestOptions(FastImageViewConverter.getOptions(placeholder))
+                    .load(url);
+        }
+
+        return placeholderThumbnailRequestBuilder;
     }
 
     @ReactProp(name = "resizeMode")
