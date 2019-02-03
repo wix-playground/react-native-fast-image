@@ -54,20 +54,6 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         return new FastImageViewWithUrl(reactContext);
     }
 
-    @ReactProp(name = "placeholder")
-    public void setPlaceholder(FastImageViewWithUrl view, @Nullable ReadableMap placeholder) {
-        if (placeholder == null || !placeholder.hasKey("uri") || isNullOrEmpty(placeholder.getString("uri"))) {
-            if(view.placeholder != null){
-                FastImageOkHttpProgressGlideModule.forget(view.placeholder.getString("uri"));
-            }
-
-            view.placeholder = null;
-            return;
-        } else {
-            view.placeholder = placeholder;
-        }
-    }
-
     @ReactProp(name = "source")
     public void setSrc(FastImageViewWithUrl view, @Nullable ReadableMap source) {
         if (source == null || !source.hasKey("uri") || isNullOrEmpty(source.getString("uri"))) {
@@ -111,7 +97,7 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
 
         if (requestManager != null) {
             RequestBuilder<Drawable> placeholderThumbnailRequestBuilder =
-                    getPlaceholderThumbnailRequestBuilder(view.placeholder, context);
+                    getPlaceholderThumbnailRequestBuilder(source, context);
 
             requestManager
                     // This will make this work for remote and local images. e.g.
@@ -128,11 +114,13 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         }
     }
 
-    private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(ReadableMap placeholder, ThemedReactContext context){
+    private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(ReadableMap source, ThemedReactContext context){
         RequestBuilder<Drawable> placeholderThumbnailRequestBuilder = null;
 
-        if(placeholder != null) {
+        if (source != null && source.hasKey("placeholder")) {
+            ReadableMap placeholder = source.getMap("placeholder");
             String url = placeholder.getString("uri");
+
             placeholderThumbnailRequestBuilder = GlideApp
                     .with(context)
                     .applyDefaultRequestOptions(FastImageViewConverter.getOptions(placeholder))

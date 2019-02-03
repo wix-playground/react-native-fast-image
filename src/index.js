@@ -35,6 +35,7 @@ class FastImage extends Component {
 
         const resolvedSource = Image.resolveAssetSource(source)
         const placeholderSource = Image.resolveAssetSource(placeholder)
+        const sourceWithPlaceholder = placeholder != null ? {...resolvedSource, placeholder: placeholderSource} : resolvedSource
 
         if (fallback) {
             return (
@@ -45,8 +46,7 @@ class FastImage extends Component {
                     <FastImageView
                         {...props}
                         style={StyleSheet.absoluteFill}
-                        source={resolvedSource}
-                        placeholder={placeholderSource}
+                        source={sourceWithPlaceholder}
                         onLoadStart={onLoadStart}
                         onProgress={onProgress}
                         onLoad={onLoad}
@@ -63,8 +63,7 @@ class FastImage extends Component {
                 <FastImageView
                     {...props}
                     style={StyleSheet.absoluteFill}
-                    source={resolvedSource}
-                    placeholder={placeholderSource}
+                    source={sourceWithPlaceholder}
                     onFastImageLoadStart={onLoadStart}
                     onFastImageProgress={onProgress}
                     onFastImageLoad={onLoad}
