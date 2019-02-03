@@ -135,6 +135,18 @@ Headers to load the image with. e.g. `{ Authorization: 'someAuthToken' }`.
 
 ---
 
+### `placeholder?: object`
+
+Source for the remote placeholder image to load while the `source` remote image is loading.
+
+---
+
+### `placeholder.uri?: string`
+
+Remote url to load the image from. e.g. `'https://facebook.github.io/react/img/logo_og.png'`.
+
+---
+
 ### `resizeMode?: enum`
 
 - `FastImage.resizeMode.contain` - Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or less than the corresponding dimension of the view (minus padding).
