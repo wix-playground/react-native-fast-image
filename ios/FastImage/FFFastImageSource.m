@@ -6,7 +6,7 @@
                    priority:(FFFPriority)priority
                     headers:(NSDictionary *)headers
                cacheControl:(FFFCacheControl)cacheControl
-                placeholder:(FFFastImageSource*)placeholder
+                placeholderURL:(NSURL*)placeholderURL
 {
     self = [super init];
     if (self) {
@@ -14,7 +14,7 @@
         _priority = priority;
         _headers = headers;
         _cacheControl = cacheControl;
-        _placeholder = placeholder;
+        _placeholderURL = placeholderURL;
     }
     return self;
 }

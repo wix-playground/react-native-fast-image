@@ -117,14 +117,12 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
     private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(ReadableMap source, ThemedReactContext context){
         RequestBuilder<Drawable> placeholderThumbnailRequestBuilder = null;
 
-        if (source != null && source.hasKey("placeholder")) {
-            ReadableMap placeholder = source.getMap("placeholder");
-            String url = placeholder.getString("uri");
+        if (source != null && source.hasKey("placeholderURI")) {
+            String placeholderURL = source.getMap("placeholderURI");
 
             placeholderThumbnailRequestBuilder = GlideApp
                     .with(context)
-                    .applyDefaultRequestOptions(FastImageViewConverter.getOptions(placeholder))
-                    .load(url);
+                    .load(placeholderURL);
         }
 
         return placeholderThumbnailRequestBuilder;

@@ -43,9 +43,10 @@ RCT_ENUM_CONVERTER(FFFCacheControl, (@{
         }
     }
     
-    FFFastImageSource *placeholder = [self FFFastImageSource:json[@"placeholder"]];
+    NSString *placeholderURI = [self FFFastImageSource:json[@"placeholderURI"]];
+    NSURL *placeholderURL = [self NSURL:placeholderURI];
     
-    FFFastImageSource *imageSource = [[FFFastImageSource alloc] initWithURL:uri priority:priority headers:headers cacheControl:cacheControl placeholder:placeholder];
+    FFFastImageSource *imageSource = [[FFFastImageSource alloc] initWithURL:uri priority:priority headers:headers cacheControl:cacheControl placeholderURL:placeholderURL];
     
     return imageSource;
 }

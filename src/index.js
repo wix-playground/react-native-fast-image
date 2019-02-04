@@ -11,17 +11,34 @@ import {
 
 const FastImageViewNativeModule = NativeModules.FastImageView
 
-class FastImage extends Component {
+class FastImage extends Component {    
     setNativeProps(nativeProps) {
         this._root.setNativeProps(nativeProps)
     }
 
     captureRef = e => (this._root = e)
 
-    render() {
+    prepareNativeSourceProp() {
         const {
             source,
             placeholder,
+            ...props
+        } = this.props
+
+        const resolvedSource = Image.resolveAssetSource(source)
+        const placeholderSource = Image.resolveAssetSource(placeholder)
+        
+        if (placeholder == null || placeholderSource == null) {
+            return resolvedSource;
+        }
+
+        const sourceWithPlaceholder = {...resolvedSource, placeholderURI: placeholderSource.uri};
+
+        return sourceWithPlaceholder;
+    }
+
+    render() {
+        const {
             onLoadStart,
             onProgress,
             onLoad,
@@ -33,9 +50,7 @@ class FastImage extends Component {
             ...props
         } = this.props
 
-        const resolvedSource = Image.resolveAssetSource(source)
-        const placeholderSource = Image.resolveAssetSource(placeholder)
-        const sourceWithPlaceholder = placeholder != null ? {...resolvedSource, placeholder: placeholderSource} : resolvedSource
+        const resolvedSource = this.prepareNativeSourceProp();
 
         if (fallback) {
             return (
@@ -46,7 +61,7 @@ class FastImage extends Component {
                     <FastImageView
                         {...props}
                         style={StyleSheet.absoluteFill}
-                        source={sourceWithPlaceholder}
+                        source={resolvedSource}
                         onLoadStart={onLoadStart}
                         onProgress={onProgress}
                         onLoad={onLoad}
@@ -63,7 +78,7 @@ class FastImage extends Component {
                 <FastImageView
                     {...props}
                     style={StyleSheet.absoluteFill}
-                    source={sourceWithPlaceholder}
+                    source={resolvedSource}
                     onFastImageLoadStart={onLoadStart}
                     onFastImageProgress={onProgress}
                     onFastImageLoad={onLoad}
@@ -122,10 +137,14 @@ const FastImageSourcePropType = PropTypes.shape({
     cache: PropTypes.oneOf(Object.keys(FastImage.cacheControl)),
 })
 
+const FastImagePlaceholderPropType = PropTypes.shape({
+    uri: PropTypes.string
+})
+
 FastImage.propTypes = {
     ...ViewPropTypes,
     source: PropTypes.oneOfType([FastImageSourcePropType, PropTypes.number]),
-    placeholder: PropTypes.oneOfType([FastImageSourcePropType, PropTypes.number]),
+    placeholder: PropTypes.oneOfType([FastImagePlaceholderPropType, PropTypes.number]),
     onLoadStart: PropTypes.func,
     onProgress: PropTypes.func,
     onLoad: PropTypes.func,
