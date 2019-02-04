@@ -118,7 +118,7 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         RequestBuilder<Drawable> placeholderThumbnailRequestBuilder = null;
 
         if (source != null && source.hasKey("placeholderURI")) {
-            String placeholderURL = source.getMap("placeholderURI");
+            String placeholderURL = source.getString("placeholderURI");
 
             placeholderThumbnailRequestBuilder = GlideApp
                     .with(context)
