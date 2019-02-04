@@ -49,11 +49,10 @@ export type FastImageSource = {
     headers?: { [key: string]: string }
     priority?: FastImage.Priority
     cache?: FastImage.Cache
-    placeholder: FastImagePlaceholder | number
 }
 
 export type FastImagePlaceholder = {
-    uri?: string
+    uri: string
 }
 
 export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
@@ -87,6 +86,7 @@ export interface OnProgressEvent {
 
 export interface FastImageProperties {
     source: FastImageSource | number
+    placeholder?: ?FastImagePlaceholder | ?number
     resizeMode?: FastImage.ResizeMode
     fallback?: boolean
 
