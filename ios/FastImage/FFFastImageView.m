@@ -183,12 +183,12 @@
         return self.image;
     }
     
-    if (self.placeholder == nil || self.placeholder.url == nil)
+    if (self.source.placeholder == nil || self.source.placeholder.url == nil)
     {
         return nil;
     }
     
-    return [FFFastImagePlaceholderRetreiver retreivePlaceholderImageFromURL:self.placeholder.url];
+    return [FFFastImagePlaceholderRetreiver retreivePlaceholderImageFromURL:self.source.placeholder.url];
 }
                     
 
