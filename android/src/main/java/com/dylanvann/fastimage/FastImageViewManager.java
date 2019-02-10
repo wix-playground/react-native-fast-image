@@ -97,7 +97,7 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
 
         if (requestManager != null) {
             RequestBuilder<Drawable> placeholderThumbnailRequestBuilder =
-                    getPlaceholderThumbnailRequestBuilder(source, context);
+                    getPlaceholderThumbnailRequestBuilder(view, source, context);
 
             requestManager
                     // This will make this work for remote and local images. e.g.
@@ -114,7 +114,7 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         }
     }
 
-    private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(ReadableMap source, ThemedReactContext context){
+    private RequestBuilder<Drawable> getPlaceholderThumbnailRequestBuilder(FastImageViewWithUrl view, ReadableMap source, ThemedReactContext context){
         RequestBuilder<Drawable> placeholderThumbnailRequestBuilder = null;
 
         if (source != null && source.hasKey("placeholderURI")) {
