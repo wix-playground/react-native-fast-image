@@ -119,10 +119,16 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
 
         if (source != null && source.hasKey("placeholderURI")) {
             String placeholderURL = source.getString("placeholderURI");
+            final FastImageSource imageSource = FastImageViewConverter.getImageSource(view.getContext(), placeholderURL);
+            if (imageSource == null) {
+                return placeholderThumbnailRequestBuilder; 
+            }
+            
+            final GlideUrl glideUrl = imageSource.getGlideUrl();
 
             placeholderThumbnailRequestBuilder = GlideApp
                     .with(context)
-                    .load(placeholderURL);
+                    .load(glideUrl.toStringUrl());
         }
 
         return placeholderThumbnailRequestBuilder;

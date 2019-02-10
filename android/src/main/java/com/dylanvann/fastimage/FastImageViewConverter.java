@@ -60,6 +60,10 @@ class FastImageViewConverter {
         return new FastImageSource(context, source.getString("uri"), getHeaders(source));
     }
 
+    static FastImageSource getImageSource(Context context, String uri) {
+        return new FastImageSource(context, uri, Headers.DEFAULT);
+    }
+
     static Headers getHeaders(ReadableMap source) {
         Headers headers = Headers.DEFAULT;
 
